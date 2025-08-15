@@ -54,6 +54,13 @@ All colors MUST be HSL.
     /* Animation Variables */
     --animation-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --animation-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --animation-float: translateY(-5px);
+    --animation-glow: 0 0 20px hsl(var(--primary) / 0.4);
+    
+    /* Glass Effect */
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-blur: blur(10px);
 
     --sidebar-background: 0 0% 98%;
 
@@ -119,4 +126,36 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-lg;
+  }
+  
+  .float-animation {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .glow-on-hover {
+    transition: var(--animation-smooth);
+  }
+  
+  .glow-on-hover:hover {
+    box-shadow: var(--animation-glow);
+    transform: var(--animation-float);
+  }
+  
+  .pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }

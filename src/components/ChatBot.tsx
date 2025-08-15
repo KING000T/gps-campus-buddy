@@ -122,48 +122,50 @@ const ChatBot = ({ isOpen, onClose }: ChatBotProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 md:items-end md:justify-end md:p-6">
-      <Card className="w-full max-w-md h-[600px] md:h-[500px] flex flex-col shadow-2xl">
-        <CardHeader className="bg-gradient-to-r from-primary to-primary-light text-primary-foreground rounded-t-lg flex flex-row items-center justify-between p-4">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-primary-foreground/20 rounded-full flex items-center justify-center">
-              <Bot className="w-4 h-4" />
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 md:items-end md:justify-end md:p-6 animate-fade-in">
+      <Card className="w-full max-w-md h-[600px] md:h-[500px] flex flex-col shadow-2xl border border-primary/20 bg-card/95 backdrop-blur-xl animate-slide-up">
+        <CardHeader className="bg-gradient-to-r from-primary via-primary to-secondary text-primary-foreground rounded-t-lg flex flex-row items-center justify-between p-5 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-white/10"></div>
+          <div className="flex items-center gap-3 relative z-10">
+            <div className="w-10 h-10 bg-primary-foreground/20 rounded-xl flex items-center justify-center border border-primary-foreground/20 shadow-lg">
+              <Bot className="w-5 h-5 animate-pulse" />
             </div>
-            <CardTitle className="text-lg">Campus Helper</CardTitle>
+            <CardTitle className="text-xl font-bold">Campus Helper</CardTitle>
           </div>
-          <Button variant="ghost" size="sm" onClick={onClose} className="text-primary-foreground hover:bg-primary-foreground/20">
-            <X className="w-4 h-4" />
+          <Button variant="ghost" size="sm" onClick={onClose} className="text-primary-foreground hover:bg-primary-foreground/20 rounded-lg transition-all duration-300 hover:scale-110 relative z-10">
+            <X className="w-5 h-5" />
           </Button>
         </CardHeader>
         
         <CardContent className="flex-1 flex flex-col p-0">
-          <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
+          <ScrollArea className="flex-1 p-5 bg-gradient-to-b from-background/50 to-primary/5" ref={scrollAreaRef}>
             <div className="space-y-4">
-              {messages.map((message) => (
+              {messages.map((message, index) => (
                 <div
                   key={message.id}
                   className={cn(
-                    "flex gap-3 max-w-[80%]",
+                    "flex gap-3 max-w-[85%] animate-fade-in",
                     message.isBot ? "justify-start" : "justify-end ml-auto"
                   )}
+                  style={{animationDelay: `${index * 0.1}s`}}
                 >
                   {message.isBot && (
-                    <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-9 h-9 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl flex items-center justify-center flex-shrink-0 mt-1 shadow-md border border-primary/10">
                       <Bot className="w-4 h-4 text-primary" />
                     </div>
                   )}
                   <div
                     className={cn(
-                      "rounded-lg px-4 py-2 text-sm",
+                      "rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-md",
                       message.isBot
-                        ? "bg-muted text-foreground"
-                        : "bg-primary text-primary-foreground"
+                        ? "bg-card/80 text-card-foreground border border-primary/10 backdrop-blur-sm"
+                        : "bg-gradient-to-r from-primary to-primary-light text-primary-foreground shadow-primary/20"
                     )}
                   >
                     {message.text}
                   </div>
                   {!message.isBot && (
-                    <div className="w-8 h-8 bg-secondary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-9 h-9 bg-gradient-to-br from-secondary/20 to-accent/20 rounded-xl flex items-center justify-center flex-shrink-0 mt-1 shadow-md border border-secondary/10">
                       <User className="w-4 h-4 text-secondary" />
                     </div>
                   )}
@@ -171,15 +173,15 @@ const ChatBot = ({ isOpen, onClose }: ChatBotProps) => {
               ))}
               
               {isTyping && (
-                <div className="flex gap-3 max-w-[80%]">
-                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <Bot className="w-4 h-4 text-primary" />
+                <div className="flex gap-3 max-w-[85%] animate-fade-in">
+                  <div className="w-9 h-9 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-xl flex items-center justify-center flex-shrink-0 mt-1 shadow-md border border-primary/10">
+                    <Bot className="w-4 h-4 text-primary animate-pulse" />
                   </div>
-                  <div className="bg-muted rounded-lg px-4 py-2 text-sm">
+                  <div className="bg-card/80 rounded-2xl px-4 py-3 text-sm border border-primary/10 backdrop-blur-sm shadow-md">
                     <div className="flex gap-1">
-                      <div className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -188,15 +190,15 @@ const ChatBot = ({ isOpen, onClose }: ChatBotProps) => {
           </ScrollArea>
 
           {/* Quick Questions */}
-          <div className="p-4 border-t bg-muted/30">
-            <p className="text-xs text-muted-foreground mb-2">Quick questions:</p>
+          <div className="p-5 border-t border-primary/10 bg-gradient-to-b from-primary/5 to-transparent">
+            <p className="text-xs text-muted-foreground mb-3 font-medium">Quick questions:</p>
             <div className="flex flex-wrap gap-2">
               {QUICK_QUESTIONS.map((question) => (
                 <Button
                   key={question}
                   variant="outline"
                   size="sm"
-                  className="text-xs h-7"
+                  className="text-xs h-8 border-primary/20 hover:bg-primary/10 hover:border-primary/30 transition-all duration-300 hover:scale-105 rounded-lg"
                   onClick={() => handleQuickQuestion(question)}
                 >
                   {question}
@@ -206,16 +208,20 @@ const ChatBot = ({ isOpen, onClose }: ChatBotProps) => {
           </div>
 
           {/* Input Area */}
-          <div className="p-4 border-t">
-            <div className="flex gap-2">
+          <div className="p-5 border-t border-primary/10 bg-card/50 backdrop-blur-sm">
+            <div className="flex gap-3">
               <Input
                 placeholder="Type your question..."
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="flex-1"
+                className="flex-1 border-primary/20 focus:border-primary bg-background/80 backdrop-blur-sm rounded-xl shadow-sm"
               />
-              <Button onClick={handleSendMessage} size="sm" className="px-3">
+              <Button 
+                onClick={handleSendMessage} 
+                size="sm" 
+                className="px-4 bg-gradient-to-r from-primary to-secondary hover:from-primary-dark hover:to-primary rounded-xl shadow-lg transition-all duration-300 hover:scale-105"
+              >
                 <Send className="w-4 h-4" />
               </Button>
             </div>
