@@ -1,12 +1,7 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
+import react from "@vitejs/plugin-react-swc";
+import path from "path";
 import { componentTagger } from "lovable-tagger";
-
-// Required because __dirname is not available in ESM
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -16,13 +11,12 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === "development" && componentTagger(),
+    mode === 'development' &&
+    componentTagger(),
   ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  // 👇 important for GitHub Pages (repo name)
-  base: "/gps-campus-buddy/",
 }));
